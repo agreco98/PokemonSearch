@@ -13,6 +13,7 @@ import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.*
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -32,7 +33,7 @@ fun SearchScreen(navController : NavController) {
         ) {
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Pokedex",
+                text = "Pokemon Search",
                 fontWeight = FontWeight.Bold,
                 fontSize = MaterialTheme.typography.h6.fontSize
             )
@@ -60,6 +61,7 @@ fun SearchBar(
                 text = it
                 onSearch(it)
             },
+            leadingIcon = { Icon(Icons.Default.Search, "") },
             label = { Text("Search") },
             maxLines = 1,
             singleLine = true,
