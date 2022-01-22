@@ -7,14 +7,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.pokemonsearch.models.PokemonListViewModel
 
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,
-    onSearch: (String) -> Unit = {}
+    viewModel: PokemonListViewModel = hiltViewModel()
 ) {
     Surface(
         color = Color.White,
@@ -33,7 +36,9 @@ fun SearchBar(
                 fontSize = MaterialTheme.typography.h6.fontSize
             )
             Spacer(modifier = Modifier.height(16.dp))
-            InputSearch()
+            InputSearch() {
+                viewModel.searchPokemonList(it)
+            }
         }
     }
 }
@@ -54,6 +59,7 @@ fun InputSearch(
         onValueChange = {
             text = it
             onSearch(it)
+            text.isNotEmpty()
         },
         leadingIcon = { Icon(Icons.Default.Search, "") },
         label = { Text("Search") },

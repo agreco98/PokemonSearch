@@ -3,6 +3,7 @@ package com.example.pokemonsearch.components.pokemonList
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement.Absolute.Center
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -33,15 +34,39 @@ fun PokemonListEntry(
     val endReached by remember { viewModel.endReached }
     val loadError by remember { viewModel.loadError }
     val isLoading by remember { viewModel.isLoading }
+    val isSearching by remember { viewModel.isSearching }
 
-    val itemCount = pokemonList.size
+    val itemCount = if(pokemonList.size % 2 == 0) {
+        pokemonList.size / 2
+    } else {
+        pokemonList.size / 2 - 1
+    }
 
     LazyColumn(
         contentPadding = PaddingValues(16.dp),
         modifier = modifier
     ) {
         items(itemCount) {
-            PokemonSearchRow(rowIndex = it, entries = pokemonList, navController = navController)
+            if (it >= itemCount - 1 && !endReached && !isLoading && !isSearching) {
+                viewModel.loadPokemonPaginated()
+            }
+            PokemonSearchRow(rowIndex = it,
+                entries = pokemonList,
+                navController = navController)
+        }
+    }
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        if(isLoading) {
+            CircularProgressIndicator(color = MaterialTheme.colors.primary)
+        }
+        if(loadError.isNotEmpty()) {
+            RetrySection(error = loadError) {
+                viewModel.loadPokemonPaginated()
+            }
         }
     }
 }
@@ -161,6 +186,22 @@ fun ChipGroup(
                    type = it.type
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun RetrySection(
+    error: String,
+    onRetry: () -> Unit
+) {
+    Column {
+        Text(error, color = Color.Red)
+        Spacer(modifier = Modifier.height(8.dp))
+        Button(
+            onClick = { onRetry() },
+            ) {
+            Text(text = "Retry")
         }
     }
 }
