@@ -1,13 +1,18 @@
 package com.example.pokemonsearch.components.pokemonList
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -15,7 +20,7 @@ import androidx.navigation.NavController
 import coil.request.ImageRequest
 import com.example.pokemonsearch.models.PokemonListViewModel
 import com.example.pokemonsearch.models.PokemonSearchListEntry
-import com.google.accompanist.coil.CoilImage
+import com.google.accompanist.coil.rememberCoilPainter
 
 
 @Composable
@@ -35,20 +40,11 @@ fun PokemonListEntry(
         contentPadding = PaddingValues(16.dp),
         modifier = modifier
     ) {
-        val itemCount = if(pokemonList.size % 2 == 0) {
-            pokemonList.size / 2
-        } else {
-            pokemonList.size / 2 + 1
-        }
         items(itemCount) {
-            if(it >= itemCount - 1 && !endReached) {
-                viewModel.loadPokemonPaginated()
-            }
             PokemonSearchRow(rowIndex = it, entries = pokemonList, navController = navController)
         }
     }
 }
-
 
 @Composable
 fun PokemonSearchRow(
@@ -59,7 +55,7 @@ fun PokemonSearchRow(
    Column {
        Row() {
            PokemonSearchEntry(
-               entry = entries[rowIndex * 2],
+               entry = entries[rowIndex],
                navController = navController
            )
    }
@@ -72,52 +68,69 @@ fun PokemonSearchEntry(
     entry: PokemonSearchListEntry,
     navController: NavController,
     modifier: Modifier = Modifier,
-    viewModel: PokemonListViewModel = hiltViewModel()
 ) {
     val defaultDominantColor = MaterialTheme.colors.surface
     var dominantColor by remember {
         mutableStateOf(defaultDominantColor)
     }
-    Row(
-        modifier = modifier
-            .fillMaxSize()
-            .clickable {
-                navController.navigate(
-                    "detail_pokemon/${dominantColor.toArgb()}/${entry.pokemonName}"
-                )
-            }
-            .padding(top = 12.dp, bottom = 12.dp)
+
+    Surface(
+        color = Color.White,
+        shape = MaterialTheme.shapes.medium
     ) {
-        Column {
-            CoilImage(
-                request = ImageRequest.Builder(LocalContext.current)
-                    .data(entry.imageUrl)
-                    .target {
-                        viewModel.calculateDominantColor(it) { color ->
-                            dominantColor = color
-                        }
-                    }
-                    .build(),
-                contentDescription = entry.pokemonName,
-                fadeIn = true,
-                modifier = Modifier
-                    .size(48.dp)
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .clickable {
+                    navController.navigate(
+                        "detail_pokemon/${dominantColor.toArgb()}/${entry.pokemonName}"
+                    )
+                },
+        ) {
+            PokemonImage(
+                modifier = Modifier.align(Alignment.CenterVertically)
             ) {
-                CircularProgressIndicator(
-                    color = MaterialTheme.colors.primary,
-                    modifier = Modifier.scale(0.5f)
-                )
+                Box {
+                    val painter = rememberCoilPainter(entry.imageUrl)
+                    Image(
+                        painter = painter,
+                        contentDescription = entry.pokemonName,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(4.dp)
+                    )
+                }
             }
-        }
-        Spacer(Modifier.width(24.dp))
-        Column {
-            Text(
-                text = "${entry.pokemonName} + ${entry.number}",
-                style = MaterialTheme.typography.h6
-            )
-            Spacer(Modifier.height(8.dp))
-            PokemonChip(type = entry.type)
-        }
+                Spacer(Modifier.width(24.dp))
+                Column(
+                    Modifier
+                        .padding(top = 16.dp, bottom = 16.dp)
+                ) {
+                    Text(
+                        text = entry.pokemonName,
+                        style = MaterialTheme.typography.h6
+                    )
+                    Spacer(Modifier.height(4.dp))
+                    Text(
+                        text = "#${entry.number}",
+                        style = MaterialTheme.typography.body1
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    PokemonChip(type = entry.type)
+                }
+            }
+    }
+}
+
+@Composable
+private fun PokemonImage(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
+    Surface(Modifier
+        .padding(start = 16.dp, top = 12.dp, bottom = 12.dp)
+        .size(width = 80.dp, height = 80.dp),
+        RoundedCornerShape(50.dp),
+        color = MaterialTheme.colors.background
+    ) {
+        content()
     }
 }
 
@@ -133,7 +146,6 @@ fun PokemonChip(
                 text = type,
                 style = MaterialTheme.typography.body2,
                 color = MaterialTheme.colors.primary,
-                modifier = Modifier.padding(8.dp)
             )
     }
 }

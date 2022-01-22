@@ -28,7 +28,7 @@ fun BottomNav() {
                 navController = navController,
                 onItemClick = {
                     navController.navigate(it.route)
-                },
+                }
             )
         }
     ) {

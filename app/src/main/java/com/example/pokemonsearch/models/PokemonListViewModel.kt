@@ -46,7 +46,7 @@ class PokemonListViewModel @Inject constructor(
                             entry.url.takeLastWhile { it.isDigit() }
                         }
                         val url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png"
-                        PokemonSearchListEntry(entry.name, url, number.toInt(), "")
+                        PokemonSearchListEntry(entry.name.capitalize(Locale.ROOT), url, number.toInt(), "")
                     }
                     currentPage++
 

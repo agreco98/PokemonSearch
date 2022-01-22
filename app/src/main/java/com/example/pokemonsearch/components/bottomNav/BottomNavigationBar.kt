@@ -12,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -34,8 +35,8 @@ fun BottomNavigationBar(
             backgroundColor = Color.White,
             modifier = modifier
                 .padding(16.dp)
-                .fillMaxWidth().clip(RoundedCornerShape(50.dp)),
-            elevation = 16.dp
+                .shadow(elevation = 4.dp, shape = MaterialTheme.shapes.large)
+                .fillMaxWidth()
         ) {
             items.forEach { item ->
                 val selected = item.route == backStackEntry?.destination?.route

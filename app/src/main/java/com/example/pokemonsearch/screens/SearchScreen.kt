@@ -10,7 +10,9 @@ import com.example.pokemonsearch.components.pokemonList.PokemonListEntry
 
 @Composable
 fun SearchScreen(navController : NavController) {
-            SearchBar()
-            Spacer(modifier = Modifier.height(24.dp))
-            PokemonListEntry(navController = navController)
+    Column(){
+        SearchBar()
+        Spacer(modifier = Modifier.height(16.dp))
+        PokemonListEntry(navController = navController)
+    }
 }
