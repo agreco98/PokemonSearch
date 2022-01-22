@@ -48,20 +48,26 @@ fun BottomNavigationBar(
                         Column(
                             horizontalAlignment = CenterHorizontally
                         ) {
-                            Icon(
-                                imageVector = item.icon,
-                                contentDescription = item.name
-                            )
+                            if(selected) {
+                                Icon(
+                                    imageVector = item.icon,
+                                    contentDescription = item.name
+                                )
+                                Text(
+                                    text = item.name,
+                                    textAlign = TextAlign.Center,
+                                    fontWeight = FontWeight.Medium,
+                                    fontSize = MaterialTheme.typography.overline.fontSize
+                                )
+                            } else {
+                                Icon(
+                                    imageVector = item.icon,
+                                    contentDescription = item.name
+                                )
+                            }
+
                         }
                     },
-                    label = {
-                        Text(
-                            text = item.name,
-                            textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.Medium,
-                            fontSize = MaterialTheme.typography.overline.fontSize
-                        )
-                    }
                 )
             }
         }
