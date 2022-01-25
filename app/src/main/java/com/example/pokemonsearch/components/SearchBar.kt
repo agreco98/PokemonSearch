@@ -59,7 +59,6 @@ fun InputSearch(
         onValueChange = {
             text = it
             onSearch(it)
-            text.isNotEmpty()
         },
         leadingIcon = { Icon(Icons.Default.Search, "") },
         label = { Text("Search") },

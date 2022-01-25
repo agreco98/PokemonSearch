@@ -1,15 +1,18 @@
 package com.example.pokemonsearch.components.pokemonList
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement.Absolute.Center
 import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -19,9 +22,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.request.ImageRequest
+import com.example.pokemonsearch.data.remote.responses.Type
 import com.example.pokemonsearch.models.PokemonListViewModel
 import com.example.pokemonsearch.models.PokemonSearchListEntry
+import com.example.pokemonsearch.util.parseTypeToColor
 import com.google.accompanist.coil.rememberCoilPainter
+import java.util.*
 
 
 @Composable
@@ -84,7 +90,7 @@ fun PokemonSearchRow(
                navController = navController
            )
    }
-    Spacer(modifier = Modifier.height(16.dp))
+    Spacer(modifier = Modifier.height(12.dp))
     }
 }
 
@@ -140,8 +146,6 @@ fun PokemonSearchEntry(
                         text = "#${entry.number}",
                         style = MaterialTheme.typography.body1
                     )
-                    Spacer(Modifier.height(8.dp))
-                    PokemonChip(type = entry.type)
                 }
             }
     }
@@ -151,7 +155,7 @@ fun PokemonSearchEntry(
 private fun PokemonImage(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     Surface(Modifier
         .padding(start = 16.dp, top = 12.dp, bottom = 12.dp)
-        .size(width = 80.dp, height = 80.dp),
+        .size(width = 72.dp, height = 72.dp),
         RoundedCornerShape(50.dp),
         color = MaterialTheme.colors.background
     ) {
@@ -161,31 +165,26 @@ private fun PokemonImage(modifier: Modifier = Modifier, content: @Composable () 
 
 @Composable
 fun PokemonChip(
-    type: String
+    types: List<Type>
 ) {
-    Surface(
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.padding(4.dp),
-        shape = MaterialTheme.shapes.large
     ) {
+        for (type in types) {
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = 8.dp)
+                    .clip(CircleShape)
+                    .background(parseTypeToColor(type))
+            ) {
+
+            }
             Text(
-                text = type,
+                text = type.type.name.capitalize(),
                 style = MaterialTheme.typography.body2,
                 color = MaterialTheme.colors.primary,
             )
-    }
-}
-
-@Composable
-fun ChipGroup(
-    types: List<PokemonSearchListEntry>,
-) {
-    Column(modifier = Modifier.padding(8.dp)) {
-        LazyRow {
-            items(types) {
-                PokemonChip(
-                   type = it.type
-                )
-            }
         }
     }
 }
