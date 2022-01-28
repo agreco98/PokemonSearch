@@ -12,7 +12,7 @@ import com.example.pokemonsearch.components.pokemonList.PokemonListEntry
 fun SearchScreen(navController : NavController) {
     Column(){
         SearchBar()
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(1.dp))
         PokemonListEntry(navController = navController)
     }
 }

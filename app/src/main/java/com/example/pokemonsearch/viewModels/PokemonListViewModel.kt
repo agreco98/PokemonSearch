@@ -1,4 +1,4 @@
-package com.example.pokemonsearch.models
+package com.example.pokemonsearch.viewModels
 
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -8,6 +8,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.palette.graphics.Palette
+import com.example.pokemonsearch.models.PokemonSearchListEntry
 import com.example.pokemonsearch.repository.PokemonRepository
 import com.example.pokemonsearch.util.Constants.PAGE_SIZE
 import com.example.pokemonsearch.util.Resource

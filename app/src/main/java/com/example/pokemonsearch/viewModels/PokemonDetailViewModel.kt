@@ -1,4 +1,4 @@
-package com.example.pokemonsearch.models
+package com.example.pokemonsearch.viewModels
 
 import androidx.lifecycle.ViewModel
 import com.example.pokemonsearch.data.remote.responses.Pokemon

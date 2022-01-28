@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Arrangement.Absolute.Center
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,21 +12,19 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import coil.request.ImageRequest
+import coil.annotation.ExperimentalCoilApi
+import coil.compose.ImagePainter
+import coil.compose.rememberImagePainter
 import com.example.pokemonsearch.data.remote.responses.Type
-import com.example.pokemonsearch.models.PokemonListViewModel
+import com.example.pokemonsearch.viewModels.PokemonListViewModel
 import com.example.pokemonsearch.models.PokemonSearchListEntry
 import com.example.pokemonsearch.util.parseTypeToColor
 import com.google.accompanist.coil.rememberCoilPainter
-import java.util.*
 
 
 @Composable
@@ -122,7 +119,7 @@ fun PokemonSearchEntry(
                 modifier = Modifier.align(Alignment.CenterVertically)
             ) {
                 Box {
-                    val painter = rememberCoilPainter(entry.imageUrl)
+                    val painter = rememberImagePainter(entry.imageUrl)
                     Image(
                         painter = painter,
                         contentDescription = entry.pokemonName,

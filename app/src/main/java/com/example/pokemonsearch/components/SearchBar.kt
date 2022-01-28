@@ -1,18 +1,17 @@
 package com.example.pokemonsearch.components
 
-import android.renderscript.ScriptGroup
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.pokemonsearch.models.PokemonListViewModel
+import com.example.pokemonsearch.viewModels.PokemonListViewModel
 
 @Composable
 fun SearchBar(
@@ -48,7 +47,7 @@ fun InputSearch(
     modifier: Modifier = Modifier,
     onSearch: (String) -> Unit = {}
 ) {
-    var text by remember {
+    var text by rememberSaveable {
         mutableStateOf("")
     }
     OutlinedTextField(
@@ -60,7 +59,7 @@ fun InputSearch(
             text = it
             onSearch(it)
         },
-        leadingIcon = { Icon(Icons.Default.Search, "") },
+        leadingIcon = { Icon(Icons.Default.Search, "search") },
         label = { Text("Search") },
         maxLines = 1,
         singleLine = true,
