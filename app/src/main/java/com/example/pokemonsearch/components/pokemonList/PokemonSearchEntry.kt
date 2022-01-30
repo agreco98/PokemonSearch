@@ -140,7 +140,7 @@ fun PokemonSearchEntry(
                     )
                     Spacer(Modifier.height(4.dp))
                     Text(
-                        text = "#${entry.number}",
+                        text = "N° ${entry.number}",
                         style = MaterialTheme.typography.body1
                     )
                 }
@@ -149,40 +149,14 @@ fun PokemonSearchEntry(
 }
 
 @Composable
-private fun PokemonImage(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
+fun PokemonImage(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     Surface(Modifier
         .padding(start = 16.dp, top = 12.dp, bottom = 12.dp)
         .size(width = 72.dp, height = 72.dp),
-        RoundedCornerShape(50.dp),
+        RoundedCornerShape(100.dp),
         color = MaterialTheme.colors.background
     ) {
         content()
-    }
-}
-
-@Composable
-fun PokemonChip(
-    types: List<Type>
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(4.dp),
-    ) {
-        for (type in types) {
-            Box(
-                modifier = Modifier
-                    .padding(horizontal = 8.dp)
-                    .clip(CircleShape)
-                    .background(parseTypeToColor(type))
-            ) {
-
-            }
-            Text(
-                text = type.type.name.capitalize(),
-                style = MaterialTheme.typography.body2,
-                color = MaterialTheme.colors.primary,
-            )
-        }
     }
 }
 

@@ -9,7 +9,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.pokemonsearch.screens.FavoriteScreen
+import com.example.pokemonsearch.screens.PokemonDetailScreen
 import com.example.pokemonsearch.screens.SearchScreen
+import java.util.*
 
 @Composable
 fun BottomNavGraph(navController: NavHostController) {
@@ -40,6 +42,10 @@ fun BottomNavGraph(navController: NavHostController) {
             val pokemonName = remember {
                 it.arguments?.getString("pokemonName")
             }
+            PokemonDetailScreen(
+                pokemonName = pokemonName?.lowercase(Locale.ROOT) ?: "",
+                navController = navController
+            )
         }
     }
 }
