@@ -53,7 +53,7 @@ fun PokemonListEntry(
             if (it >= itemCount - 1 && !endReached && !isLoading && !isSearching) {
                 viewModel.loadPokemonPaginated()
             }
-            PokemonSearchRow(rowIndex = it,
+            PokemonSearchEntryRow(rowIndex = it,
                 entries = pokemonList,
                 navController = navController)
         }
@@ -75,7 +75,7 @@ fun PokemonListEntry(
 }
 
 @Composable
-fun PokemonSearchRow(
+fun PokemonSearchEntryRow(
     entries: List<PokemonSearchListEntry>,
     rowIndex: Int,
     navController: NavController
@@ -97,11 +97,6 @@ fun PokemonSearchEntry(
     navController: NavController,
     modifier: Modifier = Modifier,
 ) {
-    val defaultDominantColor = MaterialTheme.colors.surface
-    var dominantColor by remember {
-        mutableStateOf(defaultDominantColor)
-    }
-
     Surface(
         color = Color.White,
         shape = MaterialTheme.shapes.medium
@@ -111,7 +106,7 @@ fun PokemonSearchEntry(
                 .fillMaxWidth()
                 .clickable {
                     navController.navigate(
-                        "detail_pokemon/${dominantColor.toArgb()}/${entry.pokemonName}"
+                        "detail_pokemon/${entry.pokemonName}"
                     )
                 },
         ) {

@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import com.example.pokemonsearch.screens.FavoriteScreen
 import com.example.pokemonsearch.screens.PokemonDetailScreen
@@ -23,22 +24,15 @@ fun BottomNavGraph(navController: NavHostController) {
             SearchScreen(navController = navController)
         }
         composable("favorite") {
-            FavoriteScreen()
+            FavoriteScreen(navController = navController)
         }
         composable(
-            "detail_pokemon/{dominantColor}/{pokemonName}",
+            "detail_pokemon/{pokemonName}",
                     arguments = listOf(
-                        navArgument("dominantColor") {
-                            type = NavType.IntType
-                        },
                         navArgument("pokemonName") {
                             type = NavType.StringType
                         }
                     )) {
-            val dominantColor = remember {
-                val color = it.arguments?.getInt("dominantColor")
-                color?.let { Color(it) } ?: Color.White
-            }
             val pokemonName = remember {
                 it.arguments?.getString("pokemonName")
             }
