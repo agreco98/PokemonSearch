@@ -1,2 +1,0 @@
-package com.example.pokemonsearch.components.pokemonDetail.pokemonDetailSection
-

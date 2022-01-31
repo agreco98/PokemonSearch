@@ -7,7 +7,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,19 +36,6 @@ fun PokemonDetailTopBar(
                 .clip(CircleShape)
                 .clickable {
                     navController.popBackStack()
-                }
-                .padding(12.dp)
-                .size(24.dp)
-        )
-        Icon(
-            imageVector = Icons.Default.BookmarkBorder,
-            contentDescription = "Bookmark",
-            tint = Color.Gray,
-            modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .clip(CircleShape)
-                .clickable {
-
                 }
                 .padding(12.dp)
                 .size(24.dp)

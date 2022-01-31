@@ -38,7 +38,7 @@ fun PokemonDetailSection(
         PokemonDetailSectionChip(types = pokemonInfo.types)
         Spacer(Modifier.height(24.dp))
         PokemonDetailSectionData(
-            pokemonWeigth = pokemonInfo.weight,
+            pokemonWeight = pokemonInfo.weight,
             pokemonHeight = pokemonInfo.height,
             pokemonBaseExperience = pokemonInfo.base_experience
         )

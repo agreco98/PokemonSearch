@@ -14,12 +14,12 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun PokemonDetailSectionData(
-    pokemonWeigth: Int,
+    pokemonWeight: Int,
     pokemonHeight: Int,
     pokemonBaseExperience: Int
 ) {
     val pokemonWeigthInKg = remember {
-        (pokemonWeigth * 100f) / 1000f
+        (pokemonWeight * 100f) / 1000f
     }
     val pokemonHeightInMeters = remember {
         (pokemonHeight * 100f) / 1000f
@@ -36,7 +36,7 @@ fun PokemonDetailSectionData(
             dataValue = pokemonWeigthInKg,
             dataUnit = " kg",
             dataIcon = Icons.Default.LineWeight,
-            dataMeasure = "Weigth"
+            dataMeasure = "Weight"
         )
         Divider(
             modifier = Modifier
